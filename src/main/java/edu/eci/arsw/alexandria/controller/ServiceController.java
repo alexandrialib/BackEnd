@@ -14,7 +14,7 @@ public class ServiceController {
     @Autowired
     private AlexandriaService service;
 
-    @GetMapping(value = "/article")
+    @GetMapping(value = "/articles")
     public ResponseEntity<?> getAllArticles(){
         try {
             return new ResponseEntity<>(service.getAllArticles(), HttpStatus.ACCEPTED);
@@ -23,16 +23,17 @@ public class ServiceController {
         }
     }
 
-    @GetMapping(value = "/category")
+    @GetMapping(value = "/categories")
     public ResponseEntity<?> getAllCategories(){
         try {
+            service.getAllCategories();
             return new ResponseEntity<>(service.getAllCategories(), HttpStatus.ACCEPTED);
         }catch (Exception e){
             return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.NOT_FOUND);
         }
     }
 
-    @GetMapping(value = "/category/{name}")
+    @GetMapping(value = "/categories/{name}")
     public ResponseEntity<?> getCategory(@PathVariable("name") String name){
         try {
             return new ResponseEntity<>(service.getCategoryByName(name), HttpStatus.ACCEPTED);
@@ -41,7 +42,7 @@ public class ServiceController {
         }
     }
 
-    @GetMapping(value = "/article/{name}")
+    @GetMapping(value = "/articles/{name}")
     public ResponseEntity<?> getArticle(@PathVariable("name") String name){
         try {
             return new ResponseEntity<>(service.getArticleByName(name), HttpStatus.ACCEPTED);
@@ -50,7 +51,7 @@ public class ServiceController {
         }
     }
 
-    @PostMapping(value = "/category")
+    @PostMapping(value = "/categories")
     public ResponseEntity<?> saveCategory( @RequestBody Category category){
         try {
             service.saveCategory(category);
@@ -60,7 +61,7 @@ public class ServiceController {
         }
     }
 
-    @PostMapping(value = "/category/{name}")
+    @PostMapping(value = "/categories/{name}")
     public ResponseEntity<?> saveArticleInCategory(@PathVariable("name")String name, @RequestBody Article article){
         try {
             service.getCategoryByName(name).getArticles().add(article);

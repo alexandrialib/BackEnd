@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Service
+//@Service
 public class PersistenceMemory implements Persistence {
 
     private Map<String, Category> db;
