@@ -9,15 +9,13 @@ import java.util.List;
 
 public interface AlexandriaService {
 
-    public List<Article>  getAllArticles();
+    List<Category> getAllCategories();
 
-    public List<Category> getAllCategories();
+    Category getCategoryByName(String name);
 
-    public Category getCategoryByName(String name);
+    List<Article> getCategoryArticles(String name);
 
-    public Article getArticleByName(String name);
+    void saveCategory(Category category);
 
-    public List<Article> getArticlesByAuthor(String author);
-
-    public void saveCategory(Category category);
+    void saveArticleInCategory(String name, Article article);
 }
