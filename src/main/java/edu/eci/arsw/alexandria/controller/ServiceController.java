@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/categories",produces = "application/json")
+@RequestMapping(value = "/categories")
 public class ServiceController {
 
     @Autowired
@@ -65,13 +65,4 @@ public class ServiceController {
         }
     }
 
-    @PostMapping(value = "/{name}/articles")
-    public ResponseEntity<?> saveArticleInCategory(@PathVariable("name")String name, @RequestBody Article article){
-        try {
-            service.getCategoryByName(name).getArticles().add(article);
-            return new ResponseEntity<>( HttpStatus.ACCEPTED);
-        }catch (Exception e){
-            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.NOT_FOUND);
-        }
-    }
 }

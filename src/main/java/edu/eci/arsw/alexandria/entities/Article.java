@@ -1,27 +1,32 @@
 package edu.eci.arsw.alexandria.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
-import org.bson.types.ObjectId;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.List;
+import javax.persistence.*;
 
-@Document
+
 @Data
-@RequiredArgsConstructor
+@Entity
 @NoArgsConstructor
 public class Article {
 
     @Id
-    @Getter(AccessLevel.PRIVATE)
-    @Setter(AccessLevel.PRIVATE)
-    private ObjectId id = new ObjectId();
+    @GeneratedValue(strategy= GenerationType.AUTO)
+    private Long id ;
 
-    @NonNull private String title;
-    @NonNull private String content;
+    private String title;
+    private String content;
 
-//    private Category category;
+    public Article(String title, String content){
+        this.title = title;
+        this.content = content;
+    }
+
+    @ManyToOne
+    @JsonIgnoreProperties("articles")
+    private Category category;
 //    private List<Version> past;
 //    private Version actual;
 
