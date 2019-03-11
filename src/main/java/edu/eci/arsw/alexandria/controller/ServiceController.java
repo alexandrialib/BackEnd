@@ -11,30 +11,30 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/categories")
+@RequestMapping(value = "/categories",produces = "application/json")
 public class ServiceController {
 
     @Autowired
     private AlexandriaService service;
 
 
-    @GetMapping(value = "")
-    public ResponseEntity<?> getAllCategories(){
-        try {
-            return new ResponseEntity<>(service.getAllCategories(), HttpStatus.ACCEPTED);
-        }catch (Exception e){
-            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.NOT_FOUND);
-        }
-    }
+//        @GetMapping(value = "")
+//        public ResponseEntity<?> getAllCategories(){
+//            try {
+//                return new ResponseEntity<>(service.getAllCategories(), HttpStatus.ACCEPTED);
+//            }catch (Exception e){
+//                return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.NOT_FOUND);
+//            }
+//        }
 
-    @GetMapping(value = "/{name}")
-    public ResponseEntity<?> getCategoryByName(@PathVariable("name") String name){
-        try {
-            return new ResponseEntity<>(service.getCategoryByName(name), HttpStatus.ACCEPTED);
-        }catch (Exception e){
-            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.NOT_FOUND);
-        }
-    }
+//    @GetMapping(value = "/{name}")
+//    public ResponseEntity<?> getCategoryByName(@PathVariable("name") String name){
+//        try {
+//            return new ResponseEntity<>(service.getCategoryByName(name), HttpStatus.ACCEPTED);
+//        }catch (Exception e){
+//            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.NOT_FOUND);
+//        }
+//    }
 
     @GetMapping(value = "/{name}/articles")
     public ResponseEntity<?> getAllCategoryArticles(@PathVariable("name") String name){
@@ -55,14 +55,14 @@ public class ServiceController {
         }
     }
 
-    @PostMapping(value = "")
-    public ResponseEntity<?> saveCategory( @RequestBody Category category){
-        try {
-            service.saveCategory(category);
-            return new ResponseEntity<>( HttpStatus.ACCEPTED);
-        }catch (Exception e){
-            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.NOT_FOUND);
-        }
-    }
+//    @PostMapping(value = "")
+//    public ResponseEntity<?> saveCategory( @RequestBody Category category){
+//        try {
+//            service.saveCategory(category);
+//            return new ResponseEntity<>( HttpStatus.ACCEPTED);
+//        }catch (Exception e){
+//            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.NOT_FOUND);
+//        }
+//    }
 
 }
