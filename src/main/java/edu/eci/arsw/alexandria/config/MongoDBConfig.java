@@ -1,4 +1,4 @@
-package edu.eci.arsw.alexandria;
+package edu.eci.arsw.alexandria.config;
 
 import com.mongodb.MongoClient;
 import org.springframework.context.annotation.Bean;

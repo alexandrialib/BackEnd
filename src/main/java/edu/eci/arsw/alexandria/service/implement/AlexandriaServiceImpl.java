@@ -1,7 +1,7 @@
 package edu.eci.arsw.alexandria.service.implement;
 
-import edu.eci.arsw.alexandria.entities.Article;
-import edu.eci.arsw.alexandria.entities.Category;
+import edu.eci.arsw.alexandria.model.KnowledgeBase.Article;
+import edu.eci.arsw.alexandria.model.KnowledgeBase.Category;
 import edu.eci.arsw.alexandria.repositories.CategoryRepository;
 import edu.eci.arsw.alexandria.service.AlexandriaService;
 import org.springframework.beans.factory.annotation.Autowired;

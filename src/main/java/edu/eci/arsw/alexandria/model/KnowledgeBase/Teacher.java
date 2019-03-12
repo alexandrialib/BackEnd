@@ -1,4 +1,4 @@
-package edu.eci.arsw.alexandria.entities;
+package edu.eci.arsw.alexandria.model.KnowledgeBase;
 
 import lombok.Data;
 

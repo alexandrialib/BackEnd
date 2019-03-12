@@ -1,14 +1,12 @@
 package edu.eci.arsw.alexandria.controller;
 
-import edu.eci.arsw.alexandria.entities.Article;
-import edu.eci.arsw.alexandria.entities.Category;
+import edu.eci.arsw.alexandria.model.KnowledgeBase.Article;
+import edu.eci.arsw.alexandria.model.KnowledgeBase.Category;
 import edu.eci.arsw.alexandria.service.AlexandriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping(value = "/categories",produces = "application/json")
@@ -65,13 +63,13 @@ public class ServiceController {
         }
     }
 
-    @PostMapping(value = "/{name}/articles")
-    public ResponseEntity<?> saveArticleInCategory(@PathVariable("name")String name, @RequestBody Article article){
-        try {
-            service.getCategoryByName(name).getArticles().add(article);
-            return new ResponseEntity<>( HttpStatus.ACCEPTED);
-        }catch (Exception e){
-            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.NOT_FOUND);
-        }
-    }
+//    @PostMapping(value = "/{name}/articles")
+//    public ResponseEntity<?> saveArticleInCategory(@PathVariable("name")String name, @RequestBody Article article){
+//        try {
+//            service.getCategoryByName(name).getArticles().add(article);
+//            return new ResponseEntity<>( HttpStatus.ACCEPTED);
+//        }catch (Exception e){
+//            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.NOT_FOUND);
+//        }
+//    }
 }
