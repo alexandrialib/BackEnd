@@ -9,6 +9,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import reactor.core.publisher.Flux;
 
 import java.util.ArrayList;
 
@@ -34,7 +35,9 @@ public class AlexandriaApplication {
             s.get(1).getArticles().add((new Article("TopoSort", loremIpsum.getWords(10))));
             s.get(1).getArticles().add((new Article("MST", loremIpsum.getWords(10))));
             s.get(1).getArticles().add((new Article("Dijkstra", loremIpsum.getWords(10))));
-            categoryRepository.saveAll(s);
+//            categoryRepository.save(Flux.just(new Category(" "))).then().block();
+
+            categoryRepository.saveAll(s).blockLast();
         };
     }
 }

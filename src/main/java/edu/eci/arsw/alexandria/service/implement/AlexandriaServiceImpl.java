@@ -6,6 +6,8 @@ import edu.eci.arsw.alexandria.repositories.CategoryRepository;
 import edu.eci.arsw.alexandria.service.AlexandriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 
@@ -17,18 +19,18 @@ public class AlexandriaServiceImpl implements AlexandriaService {
 
 
     @Override
-    public List<Category> getAllCategories() {
+    public Flux<Category> getAllCategories() {
         return categoryRepository.findAll();
     }
 
     @Override
-    public Category getCategoryByName(String name) {
+    public Mono<Category> getCategoryByName(String name) {
         return categoryRepository.getCategoryByName(name);
     }
 
     @Override
-    public List<Article> getCategoryArticles(String name) {
-        return categoryRepository.getCategoryByName(name).getArticles();
+    public Flux<Article> getCategoryArticles(String name) {
+        return categoryRepository.getCategoryByName(name).flatMapIterable(x -> x.getArticles());
     }
 
     @Override
@@ -38,6 +40,6 @@ public class AlexandriaServiceImpl implements AlexandriaService {
 
     @Override
     public void saveArticleInCategory(String name,Article article) {
-        categoryRepository.getCategoryByName(name).getArticles().add(article);
+//        categoryRepository.getCategoryByName(name).flatMapIterable(x ->x.getArticles());
     }
 }

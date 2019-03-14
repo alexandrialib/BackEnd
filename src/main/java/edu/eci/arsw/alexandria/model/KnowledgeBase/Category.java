@@ -13,9 +13,8 @@ import java.util.List;
 @NoArgsConstructor
 @Document
 public class Category {
+
     @Id
-    @Getter(AccessLevel.NONE)
-    @Setter(AccessLevel.NONE)
     private ObjectId id = new ObjectId();
 
     @NonNull private String name;

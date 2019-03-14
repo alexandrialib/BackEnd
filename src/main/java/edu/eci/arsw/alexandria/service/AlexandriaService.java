@@ -3,17 +3,17 @@ package edu.eci.arsw.alexandria.service;
 
 import edu.eci.arsw.alexandria.model.KnowledgeBase.Article;
 import edu.eci.arsw.alexandria.model.KnowledgeBase.Category;
-
-import java.util.List;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 
 public interface AlexandriaService {
 
-    List<Category> getAllCategories();
+    Flux<Category> getAllCategories();
 
-    Category getCategoryByName(String name);
+    Mono<Category> getCategoryByName(String name);
 
-    List<Article> getCategoryArticles(String name);
+    Flux<Article> getCategoryArticles(String name);
 
     void saveCategory(Category category);
 
