@@ -2,7 +2,7 @@ package edu.eci.arsw.alexandria.controller;
 
 import edu.eci.arsw.alexandria.model.KnowledgeBase.Article;
 import edu.eci.arsw.alexandria.model.KnowledgeBase.Category;
-import edu.eci.arsw.alexandria.service.AlexandriaService;
+import edu.eci.arsw.alexandria.service.AlexandriaCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -12,14 +12,14 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController
-@RequestMapping(value = "/categories", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+@RequestMapping(value = "/categories")
 public class ServiceController {
 
     @Autowired
-    private AlexandriaService service;
+    private AlexandriaCategoryService service;
 
 
-    @GetMapping(value = "")
+    @GetMapping()
     public ResponseEntity<Flux<Category>> getAllCategories(){
         try {
             return new ResponseEntity<>(service.getAllCategories(),HttpStatus.ACCEPTED);
@@ -28,7 +28,7 @@ public class ServiceController {
         }
     }
 
-    @GetMapping(value = "/{name}")
+    @GetMapping(value = "{name}")
     public ResponseEntity<Mono<Category>> getCategoryByName(@PathVariable("name") String name){
         try {
             return new ResponseEntity<>(service.getCategoryByName(name), HttpStatus.ACCEPTED);
@@ -37,7 +37,7 @@ public class ServiceController {
         }
     }
 
-    @GetMapping(value = "/{name}/articles")
+    @GetMapping(value = "{name}/articles")
     public ResponseEntity<Flux<Article>> getAllCategoryArticles(@PathVariable("name") String name){
         try {
             return new ResponseEntity<>(service.getCategoryArticles(name), HttpStatus.ACCEPTED);
@@ -46,7 +46,7 @@ public class ServiceController {
         }
     }
 
-    @PostMapping(value = "/{name}/articles")
+    @PostMapping(value = "{name}/articles")
     public ResponseEntity<Mono<Article>> addArticleInCategory(@PathVariable("name") String name,@RequestBody Article article){
         try {
             service.saveArticleInCategory(name,article);
@@ -56,7 +56,7 @@ public class ServiceController {
         }
     }
 
-    @PostMapping(value = "")
+    @PostMapping()
     public ResponseEntity<Flux<Category>> saveCategory( @RequestBody Category category){
         try {
             service.saveCategory(category);

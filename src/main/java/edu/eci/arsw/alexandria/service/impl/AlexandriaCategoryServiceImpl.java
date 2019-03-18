@@ -1,18 +1,16 @@
-package edu.eci.arsw.alexandria.service.implement;
+package edu.eci.arsw.alexandria.service.impl;
 
 import edu.eci.arsw.alexandria.model.KnowledgeBase.Article;
 import edu.eci.arsw.alexandria.model.KnowledgeBase.Category;
 import edu.eci.arsw.alexandria.repositories.CategoryRepository;
-import edu.eci.arsw.alexandria.service.AlexandriaService;
+import edu.eci.arsw.alexandria.service.AlexandriaCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.List;
-
 @Service
-public class AlexandriaServiceImpl implements AlexandriaService {
+public class AlexandriaCategoryServiceImpl implements AlexandriaCategoryService {
 
     @Autowired
     private CategoryRepository categoryRepository;

@@ -1,4 +1,11 @@
 package edu.eci.arsw.alexandria.model.Editor;
 
-public class ByChar implements Location{
+import edu.eci.arsw.alexandria.model.KnowledgeBase.User;
+
+public class ByChar extends Location{
+
+    @Override
+    public int[] getBlockedRange() {
+        return new int[]{getColumn(),getRow(),getColumn()+1,getRow()+1};
+    }
 }

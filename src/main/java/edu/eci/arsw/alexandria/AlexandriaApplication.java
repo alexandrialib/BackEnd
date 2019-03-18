@@ -2,9 +2,13 @@ package edu.eci.arsw.alexandria;
 
 import com.thedeanda.lorem.Lorem;
 import com.thedeanda.lorem.LoremIpsum;
+import edu.eci.arsw.alexandria.model.Editor.Editor;
+import edu.eci.arsw.alexandria.model.Editor.Text;
 import edu.eci.arsw.alexandria.model.KnowledgeBase.Article;
 import edu.eci.arsw.alexandria.model.KnowledgeBase.Category;
 import edu.eci.arsw.alexandria.repositories.CategoryRepository;
+import edu.eci.arsw.alexandria.repositories.EditorRepository;
+import org.bson.types.ObjectId;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -22,7 +26,6 @@ public class AlexandriaApplication {
 
     @Bean
     public CommandLineRunner setupCategory(CategoryRepository categoryRepository) {
-
         return (args) -> {
             ArrayList<Category> s = new ArrayList<>();
             s.add(new Category("Sort"));
@@ -35,9 +38,18 @@ public class AlexandriaApplication {
             s.get(1).getArticles().add((new Article("TopoSort", loremIpsum.getWords(10))));
             s.get(1).getArticles().add((new Article("MST", loremIpsum.getWords(10))));
             s.get(1).getArticles().add((new Article("Dijkstra", loremIpsum.getWords(10))));
-//            categoryRepository.save(Flux.just(new Category(" "))).then().block();
-
             categoryRepository.saveAll(s).blockLast();
+        };
+    }
+
+    @Bean
+    public CommandLineRunner setupEditor(EditorRepository editorRepository) {
+        return (args) -> {
+            ArrayList<Editor> s = new ArrayList<>();
+            s.add(new Editor(new ObjectId(), new Text(new ObjectId(),new ArrayList<>()), new ArrayList<>()));
+            s.get(0).getText().getContent().add("Hello World!");
+            System.out.println(s);
+            editorRepository.saveAll(s).blockLast();
         };
     }
 }
