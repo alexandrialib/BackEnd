@@ -15,7 +15,7 @@ import java.util.List;
 public class Category {
 
     @Id
-    private ObjectId id = new ObjectId();
+    private String id;
 
     @NonNull private String name;
     private List<Article> articles = new ArrayList<>();

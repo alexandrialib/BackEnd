@@ -20,50 +20,29 @@ public class ServiceController {
 
 
     @GetMapping()
-    public ResponseEntity<Flux<Category>> getAllCategories(){
-        try {
-            return new ResponseEntity<>(service.getAllCategories(),HttpStatus.ACCEPTED);
-        }catch (Exception e){
-            return new ResponseEntity<>(service.getAllCategories(),HttpStatus.NOT_FOUND);
-        }
+    public Flux<ResponseEntity<Category>> getAllCategories(){
+        return service.getAllCategories().map(x -> ResponseEntity.ok(x)).defaultIfEmpty(ResponseEntity.noContent().build());
     }
 
     @GetMapping(value = "{name}")
-    public ResponseEntity<Mono<Category>> getCategoryByName(@PathVariable("name") String name){
-        try {
-            return new ResponseEntity<>(service.getCategoryByName(name), HttpStatus.ACCEPTED);
-        }catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    public Mono<ResponseEntity<Category>> getCategoryByName(@PathVariable("name") String name){
+        return service.getCategoryByName(name).map(x-> ResponseEntity.ok(x)).defaultIfEmpty(ResponseEntity.notFound().build());
+
     }
 
     @GetMapping(value = "{name}/articles")
-    public ResponseEntity<Flux<Article>> getAllCategoryArticles(@PathVariable("name") String name){
-        try {
-            return new ResponseEntity<>(service.getCategoryArticles(name), HttpStatus.ACCEPTED);
-        }catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    public Flux<ResponseEntity<Article>> getAllCategoryArticles(@PathVariable("name") String name){
+        return service.getCategoryArticles(name).map(x -> ResponseEntity.ok(x)).defaultIfEmpty(ResponseEntity.noContent().build());
     }
 
     @PostMapping(value = "{name}/articles")
-    public ResponseEntity<Mono<Article>> addArticleInCategory(@PathVariable("name") String name,@RequestBody Article article){
-        try {
-            service.saveArticleInCategory(name,article);
-            return new ResponseEntity<>(HttpStatus.ACCEPTED);
-        }catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    public Flux<Article> addArticleInCategory(@PathVariable("name") String name,@RequestBody Article article){
+        return service.saveArticleInCategory(name,article);
     }
 
     @PostMapping()
-    public ResponseEntity<Flux<Category>> saveCategory( @RequestBody Category category){
-        try {
-            service.saveCategory(category);
-            return new ResponseEntity<>( HttpStatus.ACCEPTED);
-        }catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
-        }
+    public Mono<Category> saveCategory( @RequestBody Category category){
+        return service.saveCategory(category);
     }
 
 }

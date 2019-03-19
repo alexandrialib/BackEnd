@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Mono;
 
 @Repository
-public interface CategoryRepository extends ReactiveMongoRepository<Category, ObjectId> {
+public interface CategoryRepository extends ReactiveMongoRepository<Category, String> {
     Mono<Category> getCategoryByName(String name);
 }

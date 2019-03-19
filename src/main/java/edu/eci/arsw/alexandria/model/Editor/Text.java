@@ -17,7 +17,7 @@ import java.util.List;
 public class Text {
 
     @Id
-    private ObjectId id = new ObjectId();
+    private String id ;
     private List<String> content = new ArrayList<>();
 
 }

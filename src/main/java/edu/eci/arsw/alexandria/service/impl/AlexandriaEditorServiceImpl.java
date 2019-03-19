@@ -3,7 +3,6 @@ package edu.eci.arsw.alexandria.service.impl;
 import edu.eci.arsw.alexandria.model.Editor.Editor;
 import edu.eci.arsw.alexandria.repositories.EditorRepository;
 import edu.eci.arsw.alexandria.service.AlexandriaEditorService;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
@@ -21,22 +20,22 @@ public class AlexandriaEditorServiceImpl implements AlexandriaEditorService {
     }
 
     @Override
-    public Mono<Editor> getEditorById(ObjectId id) {
+    public Mono<Editor> getEditorById(String id) {
         return editorRepository.findById(id);
     }
 
     @Override
-    public void updateEditor(Editor editor) {
-        editorRepository.save(editor);
+    public Mono<Editor> updateEditor(Editor editor) {
+        return editorRepository.save(editor);
     }
 
     @Override
-    public void deleteEditor(ObjectId id) {
+    public void deleteEditor(String id) {
         editorRepository.deleteById(id);
     }
 
     @Override
-    public void addEditor(Editor editor) {
-        editorRepository.insert(editor);
+    public Mono<Editor> addEditor(Editor editor) {
+        return editorRepository.insert(editor);
     }
 }

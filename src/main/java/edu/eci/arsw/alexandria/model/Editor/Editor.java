@@ -16,7 +16,7 @@ import java.util.List;
 public class Editor {
 
     @Id
-    private ObjectId id  = new ObjectId();
+    private String id;
 
     @NonNull
     private Text text;

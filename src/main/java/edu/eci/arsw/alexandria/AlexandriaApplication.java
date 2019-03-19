@@ -46,9 +46,7 @@ public class AlexandriaApplication {
     public CommandLineRunner setupEditor(EditorRepository editorRepository) {
         return (args) -> {
             ArrayList<Editor> s = new ArrayList<>();
-            s.add(new Editor(new ObjectId(), new Text(new ObjectId(),new ArrayList<>()), new ArrayList<>()));
-            s.get(0).getText().getContent().add("Hello World!");
-            System.out.println(s);
+            s.add(new Editor());
             editorRepository.saveAll(s).blockLast();
         };
     }

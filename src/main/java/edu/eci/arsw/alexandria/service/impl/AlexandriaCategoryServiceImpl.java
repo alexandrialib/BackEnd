@@ -32,12 +32,12 @@ public class AlexandriaCategoryServiceImpl implements AlexandriaCategoryService 
     }
 
     @Override
-    public void saveCategory(Category category) {
-        categoryRepository.save(category);
+    public Mono<Category> saveCategory(Category category) {
+        return categoryRepository.save(category);
     }
 
     @Override
-    public void saveArticleInCategory(String name,Article article) {
-//        categoryRepository.getCategoryByName(name).flatMapIterable(x ->x.getArticles());
+    public Flux<Article> saveArticleInCategory(String name,Article article) {
+        return categoryRepository.getCategoryByName(name).flatMapIterable(x ->x.getArticles());
     }
 }

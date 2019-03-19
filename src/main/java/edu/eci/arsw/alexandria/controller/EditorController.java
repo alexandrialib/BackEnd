@@ -2,14 +2,13 @@ package edu.eci.arsw.alexandria.controller;
 
 import edu.eci.arsw.alexandria.model.Editor.Editor;
 import edu.eci.arsw.alexandria.service.AlexandriaEditorService;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import javax.validation.Valid;
 
 
 @RestController
@@ -20,24 +19,24 @@ public class EditorController {
     AlexandriaEditorService service;
 
     @GetMapping()
-    private ResponseEntity<Flux<Editor>> getAllEditors(){
-        return new ResponseEntity<Flux<Editor>>(service.getEditors(),HttpStatus.OK);
+    private Flux<ResponseEntity<Editor>> getAllEditors(){
+        return service.getEditors().map(x -> ResponseEntity.ok(x)).defaultIfEmpty(ResponseEntity.noContent().build());
     }
 
     @GetMapping(value = "/{id}")
-    private ResponseEntity<Mono<Editor>> getEditorById(@PathVariable("id")ObjectId id){
-        return new ResponseEntity<>(service.getEditorById(id), HttpStatus.ACCEPTED);
+    private Mono<ResponseEntity<Editor>> getEditorById(@PathVariable("id")String id){
+        return service.getEditorById(id)
+                .map( x -> ResponseEntity.ok(x))
+                .defaultIfEmpty(ResponseEntity.notFound().build());
     }
 
     @PostMapping()
-    private ResponseEntity<?> createEditorByUser(@RequestBody Editor editor){
-        service.addEditor(editor);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    private Mono<Editor> createEditorByUser(@Valid @RequestBody Editor editor){
+        return service.addEditor(editor);
     }
 
     @PutMapping()
-    private ResponseEntity<?> updateEditor(@RequestBody Editor editor){
-        service.updateEditor(editor);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    private Mono<Editor> updateEditor(@Valid @RequestBody Editor editor){
+        return service.updateEditor(editor);
     }
 }

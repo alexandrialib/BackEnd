@@ -7,14 +7,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
 @Data
-@RequiredArgsConstructor
 @NoArgsConstructor
+@RequiredArgsConstructor
 public class Article {
 
     @Id
-    @Getter(AccessLevel.PRIVATE)
-    @Setter(AccessLevel.PRIVATE)
-    private ObjectId id = new ObjectId();
+    private String id;
 
     @NonNull private String title;
     @NonNull private String content;
