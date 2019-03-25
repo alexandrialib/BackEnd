@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
+
 @Service
 public class AlexandriaEditorServiceImpl implements AlexandriaEditorService {
 
@@ -50,5 +52,13 @@ public class AlexandriaEditorServiceImpl implements AlexandriaEditorService {
         return this.repository
                 .save(new Editor());
 //                .doOnSuccess(entity -> this.publisher.publishEvent(new CreatedEvent(entity)));
+    }
+
+    @Override
+    public Flux<String> updateString(String id, List<String> text) {
+        return repository.findById(id).flatMap(x -> {
+            x.setText(text);
+            return Mono.just(x);
+        }).flatMap(this.repository::save).flatMapIterable(x -> x.getText());
     }
 }

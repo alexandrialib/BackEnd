@@ -20,32 +20,38 @@ public class ServiceController {
 
 
     @GetMapping()
+    @CrossOrigin(origins = "*")
     public Flux<Category> getAllCategories(){
         return service.getAllCategories();
     }
 
     @GetMapping(value = "{name}")
+    @CrossOrigin(origins = "*")
     public Mono<Category> getCategoryByName(@PathVariable("name") String name){
         return service.getCategoryByName(name);
 
     }
 
     @GetMapping(value = "{name}/articles")
+    @CrossOrigin(origins = "*")
     public Flux<Article> getAllCategoryArticles(@PathVariable("name") String name){
         return service.getCategoryArticles(name);
     }
 
     @GetMapping(value = "{name}/articles/{articleName}")
+    @CrossOrigin(origins = "*")
     public Mono<Article> getAllCategoryArticles(@PathVariable("name") String name,@PathVariable("articleName") String articleName){
         return service.getCategoryArticleByName(name,articleName);
     }
 
     @PostMapping(value = "{name}/articles")
+    @CrossOrigin(origins = "*")
     public Flux<Article> addArticleInCategory(@PathVariable("name") String name,@RequestBody Article article){
         return service.saveArticleInCategory(name,article);
     }
 
     @PostMapping()
+    @CrossOrigin(origins = "*")
     public Mono<Category> saveCategory( @RequestBody Category category){
         return service.saveCategory(category);
     }
