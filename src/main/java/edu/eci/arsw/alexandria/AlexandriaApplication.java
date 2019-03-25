@@ -56,7 +56,12 @@ public class AlexandriaApplication {
     public CommandLineRunner setupUser(UsersRepository usersRepository) {
         return (args) -> {
             ArrayList<Users> s = new ArrayList<>();
-            s.add(new Users(new ObjectId(), "pablito", "$2y$12$aU9kU1BRkdOa6/QSh1QfNevdB1hYdKY.cESd6q8cHLHeSfCUQsOCu"));
+            ArrayList<String> rls = new ArrayList<>();
+            rls.add("ROLE_ADMINISTRATOR");
+            rls.add("ROLE_TEACHER");
+            rls.add("ROLE_MONITOR");
+            rls.add("ROLE_STUDENT");
+            s.add(new Users(new ObjectId(), "pablito", "$2a$10$AjHGc4x3Nez/p4ZpvFDWeO6FGxee/cVqj5KHHnHfuLnIOzC5ag4fm",rls));
             usersRepository.saveAll(s).blockLast();
         };
     }

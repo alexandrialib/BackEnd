@@ -10,26 +10,28 @@ import org.springframework.stereotype.Component;
 
 import edu.eci.arsw.alexandria.model.Security.Users;
 import edu.eci.arsw.alexandria.repositories.UsersRepository;
+import reactor.core.publisher.Mono;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 @Component
-public class MongoUserDetailsService implements UserDetailsService{
+public class MongoUserDetailsService implements UserDetailsService {
   @Autowired
   private UsersRepository repository;
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    Users user = repository.findByUsername(username);
-
-    if(user == null) {
-      System.err.println("No existe el usuario");
+    Mono<Users> userM = repository.findByUsername(username);
+    Users user = userM.block();
+    if (user == null) {
       throw new UsernameNotFoundException("User not found");
     }
-
-    List<SimpleGrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority("user"));
-
+    List<SimpleGrantedAuthority> authorities = new ArrayList();
+    for(String role: user.getRoles()) {
+      authorities.add(new SimpleGrantedAuthority(role));
+    }
     return new User(user.getUsername(), user.getPassword(), authorities);
   }
 }
