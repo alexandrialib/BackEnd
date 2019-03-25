@@ -18,4 +18,6 @@ public interface AlexandriaCategoryService {
     Mono<Category> saveCategory(Category category);
 
     Flux<Article> saveArticleInCategory(String name, Article article);
+
+    Article getCategoryArticleByName(String name, String article);
 }

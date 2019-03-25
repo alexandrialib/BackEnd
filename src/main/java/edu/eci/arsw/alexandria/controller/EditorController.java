@@ -14,6 +14,7 @@ import java.net.URI;
 
 
 @RestController
+@CrossOrigin
 @RequestMapping(value = "/editors", produces = MediaType.APPLICATION_JSON_VALUE)
 public class EditorController {
 

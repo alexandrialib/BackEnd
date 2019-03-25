@@ -35,6 +35,11 @@ public class ServiceController {
         return service.getCategoryArticles(name);
     }
 
+    @GetMapping(value = "{name}/articles/{articleName}")
+    public Article getAllCategoryArticles(@PathVariable("name") String name,@PathVariable("articleName") String articleName){
+        return service.getCategoryArticleByName(name,articleName);
+    }
+
     @PostMapping(value = "{name}/articles")
     public Flux<Article> addArticleInCategory(@PathVariable("name") String name,@RequestBody Article article){
         return service.saveArticleInCategory(name,article);

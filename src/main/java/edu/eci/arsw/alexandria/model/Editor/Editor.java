@@ -22,6 +22,6 @@ public class Editor {
     private List<String> text = new ArrayList<>();
 
 
-    private List<ByChar> location ;
+//    private List<ByChar> location ;
 
 }

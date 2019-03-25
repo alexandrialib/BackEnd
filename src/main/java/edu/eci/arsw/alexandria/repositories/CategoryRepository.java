@@ -1,5 +1,6 @@
 package edu.eci.arsw.alexandria.repositories;
 
+import edu.eci.arsw.alexandria.model.KnowledgeBase.Article;
 import edu.eci.arsw.alexandria.model.KnowledgeBase.Category;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
