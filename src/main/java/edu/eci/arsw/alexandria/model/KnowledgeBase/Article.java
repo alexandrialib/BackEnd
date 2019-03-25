@@ -14,10 +14,10 @@ public class Article {
     @Id
     private String id;
 
-    @NonNull private String title;
-    @NonNull private String content;
+    private String title;
+    private String content;
 
-//    private Category category;
+    private Category category;
 //    private List<Version> past;
 //    private Version actual;
 

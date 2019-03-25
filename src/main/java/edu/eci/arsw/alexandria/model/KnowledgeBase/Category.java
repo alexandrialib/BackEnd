@@ -19,5 +19,10 @@ public class Category {
 
     @NonNull private String name;
     private List<Article> articles = new ArrayList<>();
+
+    public void addArticle(Article article){
+        article.setCategory(this);
+        articles.add(article);
+    }
 //    private List<Category> subCategories = new ArrayList<>();
 }
