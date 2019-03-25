@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -25,11 +26,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
     http
       .csrf().disable()
-      .authorizeRequests().antMatchers("/categories").hasAnyRole("ADMINISTRATOR","TEACHER","MONITOR","STUDENT")
-      .antMatchers("/editors").authenticated()
-      .anyRequest().permitAll().
-      and().formLogin().
-      and().httpBasic()
+      .authorizeRequests().antMatchers(HttpMethod.DELETE,"/categories/**").hasAnyRole("ADMINISTRATOR","TEACHER")
+      .antMatchers(HttpMethod.POST,"/categories/**").hasAnyRole("ADMINISTRATOR","TEACHER")
+      .antMatchers(HttpMethod.GET,"/categories/**").permitAll()
+      .antMatchers("/editors/**").authenticated()
+      //.anyRequest().permitAll()
+      .and().formLogin()
+      .and().httpBasic()
       .and().sessionManagement().disable();
   }
 
