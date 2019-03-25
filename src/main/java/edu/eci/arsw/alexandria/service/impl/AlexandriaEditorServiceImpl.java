@@ -3,7 +3,7 @@ package edu.eci.arsw.alexandria.service.impl;
 import edu.eci.arsw.alexandria.model.Editor.Editor;
 import edu.eci.arsw.alexandria.repositories.EditorRepository;
 import edu.eci.arsw.alexandria.service.AlexandriaEditorService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -11,31 +11,44 @@ import reactor.core.publisher.Mono;
 @Service
 public class AlexandriaEditorServiceImpl implements AlexandriaEditorService {
 
-    @Autowired
-    EditorRepository editorRepository;
+    private final EditorRepository repository;
+    private final ApplicationEventPublisher publisher;
+
+    public AlexandriaEditorServiceImpl(EditorRepository repository, ApplicationEventPublisher publisher) {
+        this.repository = repository;
+        this.publisher = publisher;
+    }
+
 
     @Override
     public Flux<Editor> getEditors() {
-        return editorRepository.findAll();
+        return repository.findAll();
     }
 
     @Override
     public Mono<Editor> getEditorById(String id) {
-        return editorRepository.findById(id);
+        return repository.findById(id);
     }
 
     @Override
     public Mono<Editor> updateEditor(Editor editor) {
-        return editorRepository.save(editor);
+        return repository.save(editor);
     }
 
     @Override
     public void deleteEditor(String id) {
-        editorRepository.deleteById(id);
+        repository.deleteById(id);
     }
 
     @Override
     public Mono<Editor> addEditor(Editor editor) {
-        return editorRepository.insert(editor);
+        return repository.insert(editor);
+    }
+
+    @Override
+    public Mono<Editor> create(){
+        return this.repository
+                .save(new Editor());
+//                .doOnSuccess(entity -> this.publisher.publishEvent(new CreatedEvent(entity)));
     }
 }

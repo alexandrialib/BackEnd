@@ -10,4 +10,5 @@ public interface AlexandriaEditorService {
     Mono<Editor> updateEditor(Editor editor);
     void deleteEditor(String id);
     Mono<Editor> addEditor(Editor editor);
+    Mono<Editor> create();
 }

@@ -20,19 +20,19 @@ public class ServiceController {
 
 
     @GetMapping()
-    public Flux<ResponseEntity<Category>> getAllCategories(){
-        return service.getAllCategories().map(x -> ResponseEntity.ok(x)).defaultIfEmpty(ResponseEntity.noContent().build());
+    public Flux<Category> getAllCategories(){
+        return service.getAllCategories();
     }
 
     @GetMapping(value = "{name}")
-    public Mono<ResponseEntity<Category>> getCategoryByName(@PathVariable("name") String name){
-        return service.getCategoryByName(name).map(x-> ResponseEntity.ok(x)).defaultIfEmpty(ResponseEntity.notFound().build());
+    public Mono<Category> getCategoryByName(@PathVariable("name") String name){
+        return service.getCategoryByName(name);
 
     }
 
     @GetMapping(value = "{name}/articles")
-    public Flux<ResponseEntity<Article>> getAllCategoryArticles(@PathVariable("name") String name){
-        return service.getCategoryArticles(name).map(x -> ResponseEntity.ok(x)).defaultIfEmpty(ResponseEntity.noContent().build());
+    public Flux<Article> getAllCategoryArticles(@PathVariable("name") String name){
+        return service.getCategoryArticles(name);
     }
 
     @PostMapping(value = "{name}/articles")

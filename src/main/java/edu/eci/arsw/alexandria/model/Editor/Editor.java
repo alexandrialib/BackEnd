@@ -18,10 +18,10 @@ public class Editor {
     @Id
     private String id;
 
-    @NonNull
-    private Text text;
 
-    @NonNull
+    private List<String> text = new ArrayList<>();
+
+
     private List<ByChar> location ;
 
 }
