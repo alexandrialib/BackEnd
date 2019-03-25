@@ -3,17 +3,18 @@ package edu.eci.arsw.alexandria;
 import com.thedeanda.lorem.Lorem;
 import com.thedeanda.lorem.LoremIpsum;
 import edu.eci.arsw.alexandria.model.Editor.Editor;
-import edu.eci.arsw.alexandria.model.Editor.Text;
 import edu.eci.arsw.alexandria.model.KnowledgeBase.Article;
 import edu.eci.arsw.alexandria.model.KnowledgeBase.Category;
+import edu.eci.arsw.alexandria.model.Security.Users;
 import edu.eci.arsw.alexandria.repositories.CategoryRepository;
 import edu.eci.arsw.alexandria.repositories.EditorRepository;
+import edu.eci.arsw.alexandria.repositories.UsersRepository;
+
 import org.bson.types.ObjectId;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import reactor.core.publisher.Flux;
 
 import java.util.ArrayList;
 
@@ -48,6 +49,15 @@ public class AlexandriaApplication {
             ArrayList<Editor> s = new ArrayList<>();
             s.add(new Editor());
             editorRepository.saveAll(s).blockLast();
+        };
+    }
+
+    @Bean
+    public CommandLineRunner setupUser(UsersRepository usersRepository) {
+        return (args) -> {
+            ArrayList<Users> s = new ArrayList<>();
+            s.add(new Users(new ObjectId(), "pablito", "$2y$12$aU9kU1BRkdOa6/QSh1QfNevdB1hYdKY.cESd6q8cHLHeSfCUQsOCu"));
+            usersRepository.saveAll(s).blockLast();
         };
     }
 }

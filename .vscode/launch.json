@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-AlexandriaApplication<alexandria>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "edu.eci.arsw.alexandria.AlexandriaApplication",
+            "projectName": "alexandria",
+            "args": ""
+        }
+    ]
+}

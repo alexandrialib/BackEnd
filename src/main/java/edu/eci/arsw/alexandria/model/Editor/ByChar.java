@@ -1,6 +1,5 @@
 package edu.eci.arsw.alexandria.model.Editor;
 
-import edu.eci.arsw.alexandria.model.KnowledgeBase.User;
 
 public class ByChar extends Location{
 
