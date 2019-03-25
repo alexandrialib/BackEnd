@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Mono;
 
 import javax.validation.Valid;
 import java.net.URI;
@@ -15,7 +16,7 @@ import java.net.URI;
 
 @RestController
 @CrossOrigin
-@RequestMapping(value = "/editors", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/editors")
 public class EditorController {
 
     @Autowired
@@ -26,8 +27,8 @@ public class EditorController {
         return service.getEditors();
     }
 
-    @GetMapping(value = "/{id}")
-    private Publisher<Editor> getEditorById(@PathVariable("id")String id){
+    @GetMapping(value = "/{id}",produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    private Mono<Editor> getEditorById(@PathVariable("id")String id){
         return service.getEditorById(id);
     }
 

@@ -18,7 +18,7 @@ public class Editor {
     @Id
     private String id;
 
-
+    @NonNull
     private List<String> text = new ArrayList<>();
 
 
