@@ -36,7 +36,7 @@ public class ServiceController {
     }
 
     @GetMapping(value = "{name}/articles/{articleName}")
-    public Article getAllCategoryArticles(@PathVariable("name") String name,@PathVariable("articleName") String articleName){
+    public Mono<Article> getAllCategoryArticles(@PathVariable("name") String name,@PathVariable("articleName") String articleName){
         return service.getCategoryArticleByName(name,articleName);
     }
 

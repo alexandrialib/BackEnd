@@ -32,8 +32,8 @@ public class AlexandriaCategoryServiceImpl implements AlexandriaCategoryService 
     }
 
     @Override
-    public Article getCategoryArticleByName(String name,String articleName) {
-        return categoryRepository.getCategoryByName(name).block().getArticles().parallelStream().filter(x -> x.getTitle().equals(articleName)).findFirst().orElse(null);
+    public Mono<Article> getCategoryArticleByName(String name,String articleName) {
+        return categoryRepository.getCategoryByName(name).flatMap(x -> (Mono.just(x.getArticles().stream().filter(y -> y.getTitle().equals(articleName)).findFirst().orElse(null))));
     }
 
     @Override
