@@ -1,34 +1,37 @@
 package edu.eci.arsw.alexandria.config;
 
-import lombok.extern.log4j.Log4j2;
+import edu.eci.arsw.alexandria.webSocketHandler.EditorWebSocketHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.reactive.HandlerMapping;
+import org.springframework.web.reactive.handler.SimpleUrlHandlerMapping;
 import org.springframework.web.reactive.socket.WebSocketHandler;
-import org.springframework.web.servlet.HandlerMapping;
-import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping;
+import org.springframework.web.reactive.socket.server.support.WebSocketHandlerAdapter;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-@Log4j2
 @Configuration
 public class WebSocketConfig {
 
+    @Bean
+    public HandlerMapping handlerMapping() {
 
-    private final WebSocketHandler webSocketHandler;
+        Map<String, WebSocketHandler> map = new HashMap<>();
+        map.put("/ws", new EditorWebSocketHandler());
+        SimpleUrlHandlerMapping mapping = new SimpleUrlHandlerMapping();
 
-    public WebSocketConfig(WebSocketHandler webSocketHandler) {
-        this.webSocketHandler = webSocketHandler;
+        Map<String, CorsConfiguration> corsConfigurationMap = new HashMap<>();
+        mapping.setCorsConfigurations(Collections.singletonMap("*", new CorsConfiguration().applyPermitDefaultValues()));
+        mapping.setUrlMap(map);
+//        mapping.setOrder(1); // before annotated controllers
+        return mapping;
     }
 
     @Bean
-    public HandlerMapping webSocketHandlerMapping() {
-        Map<String, WebSocketHandler> map = new HashMap<>();
-        map.put("/ws", webSocketHandler);
-
-        SimpleUrlHandlerMapping handlerMapping = new SimpleUrlHandlerMapping();
-        handlerMapping.setOrder(1);
-        handlerMapping.setUrlMap(map);
-        return handlerMapping;
+    public WebSocketHandlerAdapter handlerAdapter() {
+        return new WebSocketHandlerAdapter();
     }
 }

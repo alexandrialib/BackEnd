@@ -38,8 +38,8 @@ public class AlexandriaEditorServiceImpl implements AlexandriaEditorService {
     }
 
     @Override
-    public void deleteEditor(String id) {
-        repository.deleteById(id);
+    public Mono<Void> deleteEditor(String id) {
+        return repository.deleteById(id);
     }
 
     @Override
@@ -51,7 +51,6 @@ public class AlexandriaEditorServiceImpl implements AlexandriaEditorService {
     public Mono<Editor> create(){
         return this.repository
                 .save(new Editor());
-//                .doOnSuccess(entity -> this.publisher.publishEvent(new CreatedEvent(entity)));
     }
 
     @Override
@@ -59,6 +58,8 @@ public class AlexandriaEditorServiceImpl implements AlexandriaEditorService {
         return repository.findById(id).flatMap(x -> {
             x.setText(text);
             return Mono.just(x);
-        }).flatMap(this.repository::save).flatMapIterable(x -> x.getText());
+        })
+//                .flatMap(this.repository::save).doOnSuccess(entity -> this.publisher.publishEvent(new EditorUpdateEvent(entity)))
+                .flatMapIterable(x -> x.getText());
     }
 }

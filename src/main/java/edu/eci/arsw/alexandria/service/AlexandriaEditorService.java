@@ -10,7 +10,7 @@ public interface AlexandriaEditorService {
     Flux<Editor> getEditors();
     Mono<Editor> getEditorById(String id);
     Mono<Editor> updateEditor(Editor editor);
-    void deleteEditor(String id);
+    Mono<Void> deleteEditor(String id);
     Mono<Editor> addEditor(Editor editor);
     Mono<Editor> create();
     Flux<String> updateString(String id, List<String> text);
