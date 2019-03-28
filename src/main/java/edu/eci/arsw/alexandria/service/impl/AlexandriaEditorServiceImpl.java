@@ -14,11 +14,9 @@ import java.util.List;
 public class AlexandriaEditorServiceImpl implements AlexandriaEditorService {
 
     private final EditorRepository repository;
-    private final ApplicationEventPublisher publisher;
 
-    public AlexandriaEditorServiceImpl(EditorRepository repository, ApplicationEventPublisher publisher) {
+    public AlexandriaEditorServiceImpl(EditorRepository repository) {
         this.repository = repository;
-        this.publisher = publisher;
     }
 
 
@@ -59,7 +57,6 @@ public class AlexandriaEditorServiceImpl implements AlexandriaEditorService {
             x.setText(text);
             return Mono.just(x);
         })
-//                .flatMap(this.repository::save).doOnSuccess(entity -> this.publisher.publishEvent(new EditorUpdateEvent(entity)))
                 .flatMapIterable(x -> x.getText());
     }
 }

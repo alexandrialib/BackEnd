@@ -88,7 +88,8 @@
         <dependency>
             <groupId>de.flapdoodle.embed</groupId>
             <artifactId>de.flapdoodle.embed.mongo</artifactId>
-            <scope>runtime</scope>
+            <scope>test</scope>
+            <!--<scope>runtime</scope>-->
         </dependency>
         <dependency>
             <groupId>cz.jirutka.spring</groupId>
@@ -102,6 +103,11 @@
     </dependencies>
 
     <build>
+        <testResources>
+            <testResource>
+                <directory>src/main/webapp</directory>
+            </testResource>
+        </testResources>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -109,5 +115,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
