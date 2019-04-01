@@ -22,6 +22,7 @@ import org.springframework.web.reactive.socket.WebSocketHandler;
 import org.springframework.web.reactive.socket.WebSocketMessage;
 import org.springframework.web.reactive.socket.server.support.WebSocketHandlerAdapter;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.UnicastProcessor;
 
 import javax.mail.Session;
 import java.time.Duration;
@@ -39,39 +40,27 @@ public class AlexandriaApplication {
 
     private ObjectMapper mapper = new ObjectMapper();
 
-    @Bean
-    WebSocketHandlerAdapter webSocketHandlerAdapter() {
-        return new WebSocketHandlerAdapter();
-    }
 
 
-    @Bean
-    HandlerMapping webSocketURLMapping() {
-        SimpleUrlHandlerMapping simpleUrlHandlerMapping = new SimpleUrlHandlerMapping();
-        simpleUrlHandlerMapping.setUrlMap(
-                Collections.singletonMap("/ws", webSocketHandler()));
-        simpleUrlHandlerMapping.setCorsConfigurations(
-                Collections.singletonMap("*", new CorsConfiguration().applyPermitDefaultValues()));
-        simpleUrlHandlerMapping.setOrder(10);
-        return simpleUrlHandlerMapping;
-    }
 
-    WebSocketHandler webSocketHandler() {
-        return session ->
-                session.send(
-                        editorRepository.findById("5c992f0922a4ae1086a46fd5")
-                                .map(x -> {
-                                    try {
-                                        return mapper.writeValueAsString(x);
-                                    } catch (JsonProcessingException e) {
-                                        throw  new RuntimeException(e);
-                                    }
-                                }).map(session::textMessage)
-                ).and(session.receive()
-                        .map(WebSocketMessage::getPayloadAsText)
-                        .doOnNext(msg -> System.out.println(msg))
-                );
-    }
+
+
+//    WebSocketHandler webSocketHandler() {
+//        return session ->
+//                session.send(
+//                        editorRepository.findAll()
+//                                .map(x -> {
+//                                    try {
+//                                        return mapper.writeValueAsString(x);
+//                                    } catch (JsonProcessingException e) {
+//                                        throw  new RuntimeException(e);
+//                                    }
+//                                }).map(session::textMessage)
+//                ).and(session.receive()
+//                        .map(WebSocketMessage::getPayloadAsText)
+//                        .doOnNext(msg -> System.out.println(msg))
+//                );
+//    }
 
 //    WebSocketHandler webSocketHandler() {
 //        return session ->
