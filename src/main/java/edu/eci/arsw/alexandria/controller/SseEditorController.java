@@ -34,40 +34,10 @@ public class SseEditorController {
     AlexandriaEditorService service;
 
 
-    @GetMapping//(produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     @CrossOrigin(origins = "*")
-    private Flux<ServerSentEvent<?>> getAllEditors(){
-        return service.getEditors()
-                .<ServerSentEvent<?>>map(item ->
-                        ServerSentEvent
-                                .builder(item)
-                                .event("Editor")
-                                .id(item.getId())
-                                .build()
-                )
-                .startWith(
-                        ServerSentEvent
-                                .builder()
-                                .event("Stocks")
-                                .data(service.getEditors())
-                                .build()
-                ).doOnComplete(new Runnable() {
-                    @Override
-                    public void run() {
-                        System.out.println("doOnComplete");
-                    }
-                }).doOnSubscribe(new Consumer<Subscription>() {
-                    @Override
-                    public void accept(Subscription subscription) {
-                        System.out.println("doOnSubscribe");
-                    }
-                }).doOnTerminate(new Runnable() {
-                    @Override
-                    public void run() {
-                        System.out.println("doOnTermiante");
-                    }
-                }).delayElements(Duration.ofMillis(50))
-                ;
+    @GetMapping(produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    private Flux<Editor> getAllEditors(){
+        return service.getEditors();
     }
 
     @GetMapping(value = "/{id}/text",produces = MediaType.TEXT_EVENT_STREAM_VALUE)
