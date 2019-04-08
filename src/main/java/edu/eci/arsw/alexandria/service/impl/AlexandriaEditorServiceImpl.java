@@ -25,6 +25,7 @@ public class AlexandriaEditorServiceImpl implements AlexandriaEditorService {
         return repository.findAll();
     }
 
+
     @Override
     public Mono<Editor> getEditorById(String id) {
         return repository.findById(id);
@@ -56,7 +57,7 @@ public class AlexandriaEditorServiceImpl implements AlexandriaEditorService {
         return repository.findById(id).flatMap(x -> {
             x.setText(text);
             return Mono.just(x);
-        })
+        }).flatMap(this.repository::save)
                 .flatMapIterable(x -> x.getText());
     }
 }

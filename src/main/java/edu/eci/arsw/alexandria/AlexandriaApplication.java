@@ -14,7 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.mongodb.core.CollectionOptions;
+import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.reactive.HandlerMapping;
 import org.springframework.web.reactive.handler.SimpleUrlHandlerMapping;
@@ -31,9 +34,15 @@ import java.util.*;
 @SpringBootApplication
 public class AlexandriaApplication {
     Lorem loremIpsum = LoremIpsum.getInstance();
+
+
     public static void main(String[] args) {
-        SpringApplication.run(AlexandriaApplication.class, args);
+        ConfigurableApplicationContext application = SpringApplication.run(AlexandriaApplication.class, args);
     }
+
+
+
+
 
     @Autowired
     private EditorRepository editorRepository;
@@ -89,7 +98,7 @@ public class AlexandriaApplication {
             s.get(1).addArticle((new Article("TopoSort", loremIpsum.getWords(200))));
             s.get(1).addArticle((new Article("MST", loremIpsum.getWords(200))));
             s.get(1).addArticle((new Article("Dijkstra", loremIpsum.getWords(200))));
-            categoryRepository.saveAll(s).blockLast();
+            categoryRepository.saveAll(s).subscribe();
         };
     }
 
@@ -99,7 +108,7 @@ public class AlexandriaApplication {
             ArrayList<Editor> s = new ArrayList<>();
             s.add(new Editor());
             s.get(0).setId("5c992f0922a4ae1086a46fd5");
-            editorRepository.saveAll(s).blockLast();
+            editorRepository.saveAll(s).subscribe();
         };
     }
 }

@@ -20,7 +20,7 @@ public class WebSocketConfig {
     HandlerMapping webSocketURLMapping(WebSocketHandler handler) {
         SimpleUrlHandlerMapping simpleUrlHandlerMapping = new SimpleUrlHandlerMapping();
         simpleUrlHandlerMapping.setUrlMap(
-                Collections.singletonMap("/ws", handler));
+                Collections.singletonMap("/ws/editors", handler));
         simpleUrlHandlerMapping.setCorsConfigurations(
                 Collections.singletonMap("*", new CorsConfiguration().applyPermitDefaultValues()));
         simpleUrlHandlerMapping.setOrder(10);
