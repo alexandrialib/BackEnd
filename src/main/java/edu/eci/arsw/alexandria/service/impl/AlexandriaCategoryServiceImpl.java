@@ -28,7 +28,7 @@ public class AlexandriaCategoryServiceImpl implements AlexandriaCategoryService 
 
     @Override
     public Flux<Article> getCategoryArticles(String name) {
-        return categoryRepository.getCategoryByName(name).flatMapIterable(x -> x.getArticles());
+        return null;
     }
 
     @Override
@@ -38,6 +38,6 @@ public class AlexandriaCategoryServiceImpl implements AlexandriaCategoryService 
 
     @Override
     public Flux<Article> saveArticleInCategory(String name,Article article) {
-        return categoryRepository.getCategoryByName(name).flatMapIterable(x ->x.getArticles());
+        return null;
     }
 }

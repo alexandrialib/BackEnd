@@ -8,8 +8,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
-import edu.eci.arsw.alexandria.model.Security.Users;
-import edu.eci.arsw.alexandria.repositories.UsersRepository;
+
+import edu.eci.arsw.alexandria.repositories.UserRepository;
 import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
@@ -19,12 +19,12 @@ import java.util.List;
 @Component
 public class MongoUserDetailsService implements UserDetailsService {
   @Autowired
-  private UsersRepository repository;
+  private UserRepository repository;
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    Mono<Users> userM = repository.findByUsername(username);
-    Users user = userM.block();
+    Mono<edu.eci.arsw.alexandria.model.KnowledgeBase.User> userM = repository.findByUserName(username);
+    edu.eci.arsw.alexandria.model.KnowledgeBase.User user = userM.block();
     if (user == null) {
       throw new UsernameNotFoundException("User not found");
     }
@@ -32,6 +32,6 @@ public class MongoUserDetailsService implements UserDetailsService {
     for(String role: user.getRoles()) {
       authorities.add(new SimpleGrantedAuthority(role));
     }
-    return new User(user.getUsername(), user.getPassword(), authorities);
+    return new User(user.getUserName(), user.getPassword(), authorities);
   }
 }

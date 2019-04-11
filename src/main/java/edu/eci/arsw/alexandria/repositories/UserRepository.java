@@ -1,12 +1,13 @@
 package edu.eci.arsw.alexandria.repositories;
 
-import edu.eci.arsw.alexandria.model.Security.Users;
+
+import edu.eci.arsw.alexandria.model.KnowledgeBase.User;
 import reactor.core.publisher.Mono;
 
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UsersRepository extends ReactiveMongoRepository<Users, String> {
-    Mono<Users> findByUsername(String name);
+public interface UserRepository extends ReactiveMongoRepository<User, String> {
+    Mono<User> findByUserName(String name);
 }
