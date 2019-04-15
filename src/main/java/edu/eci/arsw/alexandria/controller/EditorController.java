@@ -3,6 +3,7 @@ package edu.eci.arsw.alexandria.controller;
 import edu.eci.arsw.alexandria.model.Editor.Editor;
 import edu.eci.arsw.alexandria.service.AlexandriaEditorService;
 import org.reactivestreams.Publisher;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;

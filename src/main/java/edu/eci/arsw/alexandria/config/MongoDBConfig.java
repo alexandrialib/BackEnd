@@ -15,9 +15,9 @@ import org.springframework.data.mongodb.config.AbstractReactiveMongoConfiguratio
 import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRepositories;
 import com.mongodb.reactivestreams.client.MongoClient;
 
-//@SpringBootApplication(exclude = {MongoAutoConfiguration.class, MongoDataAutoConfiguration.class})
-@EnableReactiveMongoRepositories
+
 @AutoConfigureAfter(EmbeddedMongoAutoConfiguration.class)
+@EnableReactiveMongoRepositories
 public class MongoDBConfig extends AbstractReactiveMongoConfiguration {
 
     private final Environment environment;
