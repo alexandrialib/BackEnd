@@ -33,10 +33,9 @@ public class SecurityConfig{
     SecurityWebFilterChain springWebFilterChain(ServerHttpSecurity http) throws Exception {
         return http
                 .csrf().disable()
+                .cors().disable()
                 .authorizeExchange()
-//                .pathMatchers(HttpMethod.GET, "/categories/Sort").hasRole("ROLE_ADMIN")
                 .pathMatchers(HttpMethod.GET, "/**").permitAll()
-                .pathMatchers("/users/{user}/**").access(this::currentUserMatchesPath)
                 .anyExchange().authenticated()
                 .and()
                 .httpBasic()

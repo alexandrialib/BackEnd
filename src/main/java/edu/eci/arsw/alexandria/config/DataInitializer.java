@@ -49,9 +49,12 @@ public class DataInitializer {
 
     private void initUsers() {
         log.info("start users users  ...");
-        User u = User.builder().username("admin").password(passwordEncoder.encode("admin")).roles(Arrays.asList("ROLE_ADMIN")).build();
+        User u1 = User.builder().username("admin").password(passwordEncoder.encode("admin")).build();
+        u1.addRole("ADMIN");
+        User u2 = User.builder().username("user").password(passwordEncoder.encode("user")).build();
         this.users.deleteAll();
-        this.users.save(u).subscribe();
+        this.users.save(u1).subscribe();
+        this.users.save(u2).subscribe();
     }
 
     private void initCategories() {

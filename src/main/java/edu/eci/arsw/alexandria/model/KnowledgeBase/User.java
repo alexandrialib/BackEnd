@@ -1,6 +1,7 @@
 package edu.eci.arsw.alexandria.model.KnowledgeBase;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -33,7 +34,7 @@ class User implements UserDetails {
     private boolean active = true;
 
     @Builder.Default()
-    private List<String> roles = new ArrayList<>();
+    private List<String> roles = new ArrayList<>(Arrays.asList("ROLE_USER"));
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -58,6 +59,19 @@ class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return active;
+    }
+
+    public void addRole(String role){
+        if(!role.contains("ROLE_"))
+            role = "ROLE_"+role;
+        if(!roles.contains(role))
+            roles.add(role);
+    }
+
+    public void deleteRole(String role){
+        if(!role.contains("ROLE_"))
+            role = "ROLE_"+role;
+        roles.remove(role);
     }
 
 }

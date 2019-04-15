@@ -2,20 +2,20 @@ package edu.eci.arsw.alexandria.controller;
 
 import edu.eci.arsw.alexandria.model.KnowledgeBase.User;
 import edu.eci.arsw.alexandria.repositories.UserRepository;
+import edu.eci.arsw.alexandria.service.AlexandriaUserService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
 @RestController
+@PreAuthorize("hasRole('USER')")
 public class UserController {
 
-    private final UserRepository users;
+    private final AlexandriaUserService service;
 
-    UserController(UserRepository users) {
-        this.users = users;
+    UserController( AlexandriaUserService service) {
+        this.service = service;
     }
 
     @GetMapping("/user")
@@ -23,8 +23,13 @@ public class UserController {
         return principal;
     }
 
-    @GetMapping("/users/{username}")
-    public Mono<User> get(@PathVariable() String username) {
-        return this.users.findByUsername(username);
+    @PostMapping("/users")
+    @PreAuthorize("true")
+    public Mono<?> addUser(@RequestBody User user){
+        try {
+            return  service.addUser(user);
+        } catch (Exception e) {
+            return Mono.empty();
+        }
     }
 }

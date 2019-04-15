@@ -13,7 +13,7 @@ import org.reactivestreams.Publisher;
 
 @RestController
 @RequestMapping(value = "/categories")
-public class ServiceController {
+public class CategoryController {
 
     @Autowired
     private AlexandriaCategoryService service;
