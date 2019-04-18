@@ -1,7 +1,27 @@
 package edu.eci.arsw.alexandria.model.KnowledgeBase;
 
-import lombok.Data;
+import edu.eci.arsw.alexandria.repositories.UserRepository;
+import lombok.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
+@Builder
+@Document
+@NoArgsConstructor
+@AllArgsConstructor
+@RequiredArgsConstructor
 public class Comment {
+
+    @NonNull
+    private User author;
+    @NonNull
+    private String content;
+    private LocalDateTime localDateTime = LocalDateTime.now();
+    private Set<User> likes = new HashSet<>();
+
 }

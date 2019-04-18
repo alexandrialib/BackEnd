@@ -10,9 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-@RequiredArgsConstructor
-@NoArgsConstructor
 @Document
+@NoArgsConstructor
+@RequiredArgsConstructor
 public class Category {
 
     @Id
@@ -25,5 +25,5 @@ public class Category {
     public void addArticle(Article article){
         articles.add(article);
     }
-//    private List<Category> subCategories = new ArrayList<>();
+
 }

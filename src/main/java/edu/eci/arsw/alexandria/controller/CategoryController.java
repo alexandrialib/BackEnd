@@ -2,6 +2,7 @@ package edu.eci.arsw.alexandria.controller;
 
 import edu.eci.arsw.alexandria.model.KnowledgeBase.Article;
 import edu.eci.arsw.alexandria.model.KnowledgeBase.Category;
+import edu.eci.arsw.alexandria.model.KnowledgeBase.Comment;
 import edu.eci.arsw.alexandria.service.AlexandriaCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -43,6 +44,20 @@ public class CategoryController {
     public Publisher<Article> getAllCategoryArticles(@PathVariable("name") String name,@PathVariable("articleName") String articleName){
         return service.getCategoryArticleByName(name,articleName);
     }
+
+    @GetMapping(value = "{name}/articles/{articleName}/comments")
+    @CrossOrigin(origins = "*")
+    public Publisher<Comment> getAllCategoryArticlesComments(@PathVariable("name") String name, @PathVariable("articleName") String articleName){
+        return service.getCategoryArticleByNameComments(name,articleName);
+    }
+
+    @PostMapping(value = "{name}/articles/{articleName}/comments")
+//    @PreAuthorize("hasRole('USER')")
+    @CrossOrigin(origins = "*")
+    public Publisher<Comment> saveCommentInArticle(@PathVariable("name") String name, @PathVariable("articleName") String articleName,@RequestBody Comment comment){
+        return service.saveCommentInArticle(name, articleName, comment);
+    }
+
 
     @PostMapping(value = "{name}/articles")
     @PreAuthorize("hasRole('ADMIN')")

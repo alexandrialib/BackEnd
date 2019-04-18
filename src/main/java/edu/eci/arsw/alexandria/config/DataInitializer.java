@@ -11,6 +11,7 @@ import com.thedeanda.lorem.LoremIpsum;
 import edu.eci.arsw.alexandria.model.Editor.Editor;
 import edu.eci.arsw.alexandria.model.KnowledgeBase.Article;
 import edu.eci.arsw.alexandria.model.KnowledgeBase.Category;
+import edu.eci.arsw.alexandria.model.KnowledgeBase.Comment;
 import edu.eci.arsw.alexandria.model.KnowledgeBase.User;
 import edu.eci.arsw.alexandria.repositories.CategoryRepository;
 import edu.eci.arsw.alexandria.repositories.EditorRepository;
@@ -59,17 +60,20 @@ public class DataInitializer {
 
     private void initCategories() {
         log.info("start data categories  ...");
+        User user = users.findByUsername("admin").block();
         ArrayList<Category> list = new ArrayList<>();
+        categories.deleteAll();
         list.add(new Category("Sort"));
         list.add(new Category("Graph theory"));
         list.add(new Category("Data structures"));
-        list.get(0).addArticle((new Article("Quick", loremIpsum.getWords(200))));
-        list.get(0).addArticle((new Article("Selection", loremIpsum.getWords(200))));
-        list.get(0).addArticle((new Article("Bubble", loremIpsum.getWords(200))));
-        list.get(0).addArticle((new Article("Merge", loremIpsum.getWords(200))));
-        list.get(1).addArticle((new Article("TopoSort", loremIpsum.getWords(200))));
-        list.get(1).addArticle((new Article("MST", loremIpsum.getWords(200))));
-        list.get(1).addArticle((new Article("Dijkstra", loremIpsum.getWords(200))));
+        list.get(0).addArticle((new Article("Quick", loremIpsum.getWords(200), user)));
+        list.get(0).getArticles().get(0).AddComment(new Comment(user, "comment example"));
+        list.get(0).addArticle((new Article("Selection", loremIpsum.getWords(200), user)));
+        list.get(0).addArticle((new Article("Bubble", loremIpsum.getWords(200), user)));
+        list.get(0).addArticle((new Article("Merge", loremIpsum.getWords(200), user)));
+        list.get(1).addArticle((new Article("TopoSort", loremIpsum.getWords(200), user)));
+        list.get(1).addArticle((new Article("MST", loremIpsum.getWords(200), user)));
+        list.get(1).addArticle((new Article("Dijkstra", loremIpsum.getWords(200), user)));
         categories.deleteAll().subscribe();
         categories.saveAll(list).subscribe();
     }

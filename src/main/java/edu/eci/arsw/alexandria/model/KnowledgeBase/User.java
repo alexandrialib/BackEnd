@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,46 +19,57 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 
 @Data
-@ToString
 @Builder
+@ToString
+@Document
 @NoArgsConstructor
 @AllArgsConstructor
-@Document
-public
-class User implements UserDetails {
+public class User implements UserDetails {
 
     @Id
     private String id;
     private String username;
+    private String email;
+    private String name;
+    private String lastName;
+
+    @JsonIgnore
     private String password;
 
+    @JsonIgnore
     @Builder.Default()
     private boolean active = true;
 
+    @JsonIgnore
     @Builder.Default()
     private List<String> roles = new ArrayList<>(Arrays.asList("ROLE_USER"));
 
     @Override
+    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return AuthorityUtils.createAuthorityList(roles.toArray(new String[roles.size()]));
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonExpired() {
         return active;
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonLocked() {
         return active;
     }
 
     @Override
+    @JsonIgnore
     public boolean isCredentialsNonExpired() {
         return active;
     }
 
     @Override
+    @JsonIgnore
     public boolean isEnabled() {
         return active;
     }
