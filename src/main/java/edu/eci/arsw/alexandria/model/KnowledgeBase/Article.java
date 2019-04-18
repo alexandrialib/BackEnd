@@ -25,7 +25,7 @@ public class Article {
     @NonNull
     private User author;
     @NonNull
-    private LocalDateTime localDateTime = LocalDateTime.now();
+    private LocalDateTime date = LocalDateTime.now();
 
     private List<Comment> comments = new ArrayList<>();
     private Set<User> likes = new HashSet<>();

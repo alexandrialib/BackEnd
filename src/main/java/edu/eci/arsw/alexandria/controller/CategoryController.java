@@ -52,7 +52,7 @@ public class CategoryController {
     }
 
     @PostMapping(value = "{name}/articles/{articleName}/comments")
-//    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER')")
     @CrossOrigin(origins = "*")
     public Publisher<Comment> saveCommentInArticle(@PathVariable("name") String name, @PathVariable("articleName") String articleName,@RequestBody Comment comment){
         return service.saveCommentInArticle(name, articleName, comment);

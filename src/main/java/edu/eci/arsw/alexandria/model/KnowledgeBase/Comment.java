@@ -21,7 +21,7 @@ public class Comment {
     private User author;
     @NonNull
     private String content;
-    private LocalDateTime localDateTime = LocalDateTime.now();
+    private LocalDateTime date = LocalDateTime.now();
     private Set<User> likes = new HashSet<>();
 
 }
