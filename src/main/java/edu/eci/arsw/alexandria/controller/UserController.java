@@ -23,7 +23,6 @@ public class UserController {
         return principal;
     }
 
-    @CrossOrigin("*")
     @PostMapping("/users")
     public Mono<?> addUser(@RequestBody User user){
         try {
