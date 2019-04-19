@@ -34,32 +34,27 @@ public class SseEditorController {
     AlexandriaEditorService service;
 
 
-    @CrossOrigin(origins = "*")
     @GetMapping(produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     private Flux<Editor> getAllEditors(){
         return service.getEditors();
     }
 
     @GetMapping(value = "/{id}/text",produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    @CrossOrigin(origins = "*")
     private Publisher<String> getEditorText(@PathVariable("id")String id){
         return service.getEditorById(id).flatMapIterable(x -> x.getText());
     }
 
     @PutMapping(value = "/{id}/text",produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    @CrossOrigin(origins = "*")
     private Publisher<String> getEditorText(@PathVariable("id")String id, @RequestBody List<String> texts){
         return service.updateString(id,texts);
     }
 
     @PostMapping("create")
-    @CrossOrigin(origins = "*")
     private Publisher<Editor> createEditorByUser(){
         getAllEditors();
         return service.create();
     }
 
-    @CrossOrigin(origins = "*")
     @PutMapping()
     private Publisher<Editor> updateEditor(@Valid @RequestBody Editor editor){
         return service.updateEditor(editor);
