@@ -1,19 +1,23 @@
 package edu.eci.arsw.alexandria.service.impl;
 
+import edu.eci.arsw.alexandria.controller.SSE.EditorListenerReactive;
 import edu.eci.arsw.alexandria.model.Editor.Editor;
 import edu.eci.arsw.alexandria.repositories.EditorRepository;
 import edu.eci.arsw.alexandria.service.AlexandriaEditorService;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 public class AlexandriaEditorServiceImpl implements AlexandriaEditorService {
 
     private final EditorRepository repository;
+
+    private Map<String, EditorListenerReactive> reactiveMap = new ConcurrentHashMap<>();
 
     public AlexandriaEditorServiceImpl(EditorRepository repository) {
         this.repository = repository;
@@ -33,6 +37,8 @@ public class AlexandriaEditorServiceImpl implements AlexandriaEditorService {
 
     @Override
     public Mono<Editor> updateEditor(Editor editor) {
+
+//        repository.findById(editor.getId()).subscribe(listenerReactive::onPostEditor);
         return repository.save(editor);
     }
 
@@ -54,7 +60,8 @@ public class AlexandriaEditorServiceImpl implements AlexandriaEditorService {
 
     @Override
     public Flux<String> updateString(String id, List<String> text) {
-        return repository.findById(id).flatMap(x -> {
+        return
+        repository.findById(id).flatMap(x -> {
             x.setText(text);
             return Mono.just(x);
         }).flatMap(this.repository::save)

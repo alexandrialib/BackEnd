@@ -11,6 +11,7 @@ import org.springframework.web.reactive.function.BodyInserter;
 import org.springframework.web.reactive.function.BodyInserters;
 import reactor.core.publisher.Flux;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -22,7 +23,7 @@ public class EditorControllerTest {
     public void get(){
         String id = UUID.randomUUID().toString();
         Editor[] editors = {
-                new Editor(id,new ArrayList<>(),null),
+                new Editor(id,new ArrayList<>(),null, LocalDateTime.now(),""),
                 new Editor(),
                 new Editor(),
                 new Editor()
@@ -42,7 +43,7 @@ public class EditorControllerTest {
     public void post(){
         String id = UUID.randomUUID().toString();
         Editor[] editors = {
-                new Editor(id,new ArrayList<>(),null),
+                new Editor(id,new ArrayList<>(),null,LocalDateTime.now(),""),
                 new Editor(),
                 new Editor(),
                 new Editor()
@@ -55,7 +56,7 @@ public class EditorControllerTest {
         WebTestClient webClient = WebTestClient.bindToController(new EditorController(new AlexandriaEditorServiceImpl(repository)))
                 .build();
         webClient.post().uri("/editors/create",id).exchange().expectStatus().is2xxSuccessful();
-        webClient.post().uri("/editors",id).body(BodyInserters.fromObject(new Editor(UUID.randomUUID().toString(),new ArrayList<>(),new ArrayList<>()))).exchange().expectStatus().is4xxClientError();
+        webClient.post().uri("/editors",id).body(BodyInserters.fromObject(new Editor(UUID.randomUUID().toString(),new ArrayList<>(),new ArrayList<>(),LocalDateTime.now(),""))).exchange().expectStatus().is4xxClientError();
     }
 
 

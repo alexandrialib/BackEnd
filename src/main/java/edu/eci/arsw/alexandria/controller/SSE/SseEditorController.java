@@ -1,29 +1,20 @@
-package edu.eci.arsw.alexandria.controller;
+package edu.eci.arsw.alexandria.controller.SSE;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import edu.eci.arsw.alexandria.controller.SSE.EditorListenerReactive;
 import edu.eci.arsw.alexandria.model.Editor.Editor;
 import edu.eci.arsw.alexandria.service.AlexandriaEditorService;
 import org.reactivestreams.Publisher;
-import org.reactivestreams.Subscription;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
 import org.springframework.http.codec.ServerSentEvent;
-import org.springframework.integration.dsl.IntegrationFlow;
-import org.springframework.integration.dsl.MessageChannels;
-import org.springframework.messaging.MessageChannel;
-import org.springframework.messaging.SubscribableChannel;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 
 import javax.validation.Valid;
-import java.io.IOException;
-import java.time.Duration;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.function.Consumer;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 
 @RestController
@@ -32,6 +23,9 @@ public class SseEditorController {
 
     @Autowired
     AlexandriaEditorService service;
+
+    AtomicInteger ids = new AtomicInteger(0);
+    Map<String, EditorListenerReactive> map = new ConcurrentHashMap<>();
 
 
     @GetMapping(produces = MediaType.TEXT_EVENT_STREAM_VALUE)
@@ -58,5 +52,22 @@ public class SseEditorController {
     @PutMapping()
     private Publisher<Editor> updateEditor(@Valid @RequestBody Editor editor){
         return service.updateEditor(editor);
+    }
+
+    @PostMapping(value = "/v2/{id}")
+    public void PostMessage(@PathVariable("id") String id,@RequestBody Editor editor){
+        if(map.get(id)==null){
+            map.put(id, new EditorListenerReactive());
+        }
+        map.get(id).onPostEditor(editor, ids.getAndIncrement());
+    }
+
+
+    @GetMapping(value = "/v2/{id}",produces = "text/event-stream")
+    public Flux<ServerSentEvent<Editor>> subscribe(@PathVariable("id") String id){
+        if(map.get(id)==null){
+            map.put(id, new EditorListenerReactive());
+        }
+        return map.get(id).subscribe();
     }
 }
