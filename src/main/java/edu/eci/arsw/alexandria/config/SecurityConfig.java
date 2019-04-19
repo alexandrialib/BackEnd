@@ -36,6 +36,7 @@ public class SecurityConfig{
                 .cors().disable()
                 .authorizeExchange()
                 .pathMatchers(HttpMethod.GET, "/**").permitAll()
+                .pathMatchers(HttpMethod.POST, "/users").permitAll()
                 .anyExchange().authenticated()
                 .and()
                 .httpBasic()

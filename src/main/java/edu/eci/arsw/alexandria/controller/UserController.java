@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
 @RestController
-@PreAuthorize("hasRole('USER')")
 public class UserController {
 
     private final AlexandriaUserService service;
@@ -19,14 +18,16 @@ public class UserController {
     }
 
     @GetMapping("/user")
+    @PreAuthorize("hasRole('USER')")
     public Mono<User> current(@AuthenticationPrincipal Mono<User> principal) {
         return principal;
     }
 
+    @CrossOrigin("*")
     @PostMapping("/users")
-    @PreAuthorize("true")
     public Mono<?> addUser(@RequestBody User user){
         try {
+            System.out.println(user);
             return  service.addUser(user);
         } catch (Exception e) {
             return Mono.empty();
