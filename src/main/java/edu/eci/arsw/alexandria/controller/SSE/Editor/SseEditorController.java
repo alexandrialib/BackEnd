@@ -1,6 +1,5 @@
-package edu.eci.arsw.alexandria.controller.SSE;
+package edu.eci.arsw.alexandria.controller.SSE.Editor;
 
-import edu.eci.arsw.alexandria.controller.SSE.EditorListenerReactive;
 import edu.eci.arsw.alexandria.model.Editor.Editor;
 import edu.eci.arsw.alexandria.service.AlexandriaEditorService;
 import org.reactivestreams.Publisher;

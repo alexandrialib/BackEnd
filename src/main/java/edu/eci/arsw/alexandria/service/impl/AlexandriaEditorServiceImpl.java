@@ -1,6 +1,6 @@
 package edu.eci.arsw.alexandria.service.impl;
 
-import edu.eci.arsw.alexandria.controller.SSE.EditorListenerReactive;
+import edu.eci.arsw.alexandria.controller.SSE.Editor.EditorListenerReactive;
 import edu.eci.arsw.alexandria.model.Editor.Editor;
 import edu.eci.arsw.alexandria.repositories.EditorRepository;
 import edu.eci.arsw.alexandria.service.AlexandriaEditorService;

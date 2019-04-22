@@ -1,4 +1,4 @@
-package edu.eci.arsw.alexandria.controller.SSE;
+package edu.eci.arsw.alexandria.controller.SSE.Editor;
 
 import edu.eci.arsw.alexandria.model.Editor.Editor;
 import org.springframework.http.codec.ServerSentEvent;
