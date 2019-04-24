@@ -8,9 +8,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Data
+@Builder
 @Document
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,12 +21,19 @@ public class Editor {
 
     @Id
     private String id;
-    private List<String> text = new ArrayList<>();
-    {text.add("");}
 
+    @Builder.Default
+    private List<String> text = Arrays.asList("");
 
-    private List<ByChar> location ;
+    @Builder.Default
+    private AtomicInteger version= new AtomicInteger(0);
 
+    @Builder.Default
+    private List<ByChar> location = new ArrayList<>();
+
+    @Builder.Default
     private LocalDateTime lastEdit = LocalDateTime.now();
-    private String lastUser;
+
+    @Builder.Default
+    private String lastUser = "";
 }
