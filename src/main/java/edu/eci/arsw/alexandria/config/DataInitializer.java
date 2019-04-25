@@ -68,7 +68,20 @@ public class DataInitializer {
         list.get(0).addArticle((new Article("Bubble", loremIpsum.getWords(200), user)));
         list.get(0).addArticle((new Article("Merge", loremIpsum.getWords(200), user)));
         list.get(1).addArticle((new Article("TopoSort", loremIpsum.getWords(200), user)));
-        list.get(1).addArticle((new Article("MST", loremIpsum.getWords(200), user)));
+        list.get(1).addArticle((new Article("MST", "In graph theory, a tree is a graph in which there is exactly one path between two nodes and all its nodes are connected. A minimum expansion tree is, as its name indicates, a tree that connects all the nodes of a network and that additionally is the most efficient existing way to do it, that is to say, the sum of its arcs is the least possible. To obtain the minimum expansion tree we are going to study the Kruskal algorithm, for which the graph must meet certain requirements: \n" +
+                "- Not to be directed \n" +
+                "- Have weights \n" +
+                "- To be connected \n" +
+                "\n" +
+                "If the network fulfills the above conditions, you proceed with the algorithm, which has two phases: \n" +
+                "1. Sort a list of arcs that represents the graph. \n" +
+                "This algorithm requires the network to be represented by a list of arcs, in the form (u,v,w) since the requirements stipulated that the network must have weights. This list of arcs will be sorted according to their weight, this to ensure that the tree resulting from this algorithm will give us the least expensive way to connect the nodes.\n" +
+                " \n" +
+                "2. Create a dissyunto set and integrate the graph to this structure \n" +
+                "Each node of the network will be represented as a disjointed set, one without children. The ordered arcs will be crossed in order to integrate the tree to this structure, joining the nodes of each crossed arc in order to stipulate that these two are already connected in the minimum expansion tree. If the nodes were already connected at the time of crossing them, this arch will be discarded, since there is already a less expensive way to connect them. \n" +
+                "\n" +
+                "This is the general way to find the MST by means of Kruskal's algorithmbut certain improvements can be added to this one. The number of edges of the tree is the number of nodes minus one, so we should stop going through the list of arcs, in order to make the algorithm more efficient, because if this condition was already met, we would be processing nodes that will always be connected.", user)));
+        list.get(1).addArticle((new Article("Dijkstra", loremIpsum.getWords(200), user)));
         list.get(1).addArticle((new Article("Dijkstra", loremIpsum.getWords(200), user)));
         categories.deleteAll().subscribe();
         categories.saveAll(list).subscribe();
