@@ -10,6 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import com.mailjet.client.errors.MailjetException;
+import com.mailjet.client.errors.MailjetSocketTimeoutException;
+import com.mailjet.client.MailjetClient;
+import com.mailjet.client.MailjetRequest;
+import com.mailjet.client.MailjetResponse;
+import com.mailjet.client.resource.Sender;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 @Service
 public class AlexandriaCategoryServiceImpl implements AlexandriaCategoryService {
@@ -65,8 +73,10 @@ public class AlexandriaCategoryServiceImpl implements AlexandriaCategoryService 
 
     @Override
     public Flux<Article> saveArticleInCategory(String name,Article article) {
+        
         return categoryRepository.getCategoryByName(name).flatMap(x -> {
             x.addArticle(article);
+            x.notificar();
             return Mono.just(x);
         }).flatMap(this.categoryRepository::save).flatMapIterable(x -> x.getArticles());
     }
