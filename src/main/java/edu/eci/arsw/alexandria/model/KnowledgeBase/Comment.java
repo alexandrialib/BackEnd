@@ -24,4 +24,11 @@ public class Comment {
     private LocalDateTime date = LocalDateTime.now();
     private Set<User> likes = new HashSet<>();
 
+    public User getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(User author) {
+        this.author = author;
+    }
 }

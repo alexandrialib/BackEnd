@@ -1,5 +1,7 @@
 package edu.eci.arsw.alexandria.model.KnowledgeBase;
 
+import com.mailjet.client.ClientOptions;
+import com.mailjet.client.resource.Emailv31;
 import lombok.*;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
@@ -28,30 +30,47 @@ public class Category {
     @NonNull private String name;
 
     private List<Article> articles = new ArrayList<>();
+    private List<User> subs = new ArrayList<>();
 
     public void addArticle(Article article){
         articles.add(article);
     }
+    public void subscribe(User sub){
+        subs.add(sub);
+    }
 
-    public void notificar() throws MailjetException, MailjetSocketTimeoutException {
-    MailjetRequest request;
-    MailjetResponse response;
-    client = new MailjetClient(System.getenv("2c3e6af59c1e14ddb323c4c362817429"), System.getenv("919b7d494be472cc61b3a8e44a1461a8"), new ClientOptions("v3.1"));
-    request = new MailjetRequest(Emailv31.resource)
-          .property(Emailv31.MESSAGES, new JSONArray()
-              .put(new JSONObject()
-                  .put(Emailv31.Message.FROM, new JSONObject()
-                      .put("Email", "pilot@mailjet.com")
-                      .put("Name", "Mailjet Pilot"))
-                  .put(Emailv31.Message.TO, new JSONArray()
-                      .put(new JSONObject()
-                          .put("Email", "passenger1@mailjet.com")
-                          .put("Name", "passenger 1")))
-                  .put(Emailv31.Message.SUBJECT, "Your email flight plan!")
-                  .put(Emailv31.Message.TEXTPART, "Dear passenger 1, welcome to Mailjet! May the delivery force be with you!")
-                  .put(Emailv31.Message.HTMLPART, "<h3>Dear passenger 1, welcome to <a href='https://www.mailjet.com/'>Mailjet</a>!</h3><br />May the delivery force be with you!")));
-    response = client.post(request);
-    System.out.println(response.getStatus());
-    System.out.println(response.getData());
-  }
+    public void notificar(Article a) {
+        for(User u: subs){
+            MailjetRequest request;
+            MailjetResponse response = null;
+            MailjetClient client = new MailjetClient(System.getenv("2c3e6af59c1e14ddb323c4c362817429"), System.getenv("919b7d494be472cc61b3a8e44a1461a8"), new ClientOptions("v3.1"));
+            request = new MailjetRequest(Emailv31.resource)
+                    .property(Emailv31.MESSAGES, new JSONArray()
+                            .put(new JSONObject()
+                                    .put(Emailv31.Message.FROM, new JSONObject()
+                                            .put("Email", "alexandrialib@mail.com")
+                                            .put("Name", "Alexandria Lib"))
+                                    .put(Emailv31.Message.TO, new JSONArray()
+                                            .put(new JSONObject()
+                                                    .put("Email", u.getEmail())
+                                                    .put("Name", u.getUsername())))
+                                    .put(Emailv31.Message.SUBJECT, "New Article")
+                                    .put(Emailv31.Message.TEXTPART, u.getName() + ", an article was added to category " + name)
+                                    .put(Emailv31.Message.HTMLPART, "<h3>Raider of the lost knowledge, if you want to know about " + a.getTitle() + "click here: <a href='https://alexandria-lib-front.herokuapp.com/categories/" + name +"/articles/" + a.getTitle() +"'></a>!</h3>")));
+            try {
+                response = client.post(request);
+            } catch (MailjetException e) {
+                e.printStackTrace();
+            } catch (MailjetSocketTimeoutException e) {
+                e.printStackTrace();
+            }
+            System.out.println(response.getStatus());
+            System.out.println(response.getData());
+        }
+
+    }
+
+    public List<Article> getArticles() {
+        return articles;
+    }
 }

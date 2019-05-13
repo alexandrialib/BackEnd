@@ -3,6 +3,7 @@ package edu.eci.arsw.alexandria.service.impl;
 import edu.eci.arsw.alexandria.model.KnowledgeBase.Article;
 import edu.eci.arsw.alexandria.model.KnowledgeBase.Category;
 import edu.eci.arsw.alexandria.model.KnowledgeBase.Comment;
+import edu.eci.arsw.alexandria.model.KnowledgeBase.User;
 import edu.eci.arsw.alexandria.repositories.CategoryRepository;
 import edu.eci.arsw.alexandria.repositories.UserRepository;
 import edu.eci.arsw.alexandria.service.AlexandriaCategoryService;
@@ -66,6 +67,14 @@ public class AlexandriaCategoryServiceImpl implements AlexandriaCategoryService 
                         .findFirst().orElse(null).getComments());
     }
 
+    /*@Override
+    public Flux<User> subscribeToCategory(String category, User user) {
+        return categoryRepository.getCategoryByName(category).flatMap(x -> {
+            x.subscribe(user);
+            return Mono.just(x);
+        }).flatMap(this.categoryRepository::save).flatMapIterable(x -> x.getArticles());
+    }*/
+
     @Override
     public Mono<Category> saveCategory(Category category) {
         return categoryRepository.save(category);
@@ -73,10 +82,9 @@ public class AlexandriaCategoryServiceImpl implements AlexandriaCategoryService 
 
     @Override
     public Flux<Article> saveArticleInCategory(String name,Article article) {
-        
         return categoryRepository.getCategoryByName(name).flatMap(x -> {
             x.addArticle(article);
-            x.notificar();
+            x.notificar(article);
             return Mono.just(x);
         }).flatMap(this.categoryRepository::save).flatMapIterable(x -> x.getArticles());
     }

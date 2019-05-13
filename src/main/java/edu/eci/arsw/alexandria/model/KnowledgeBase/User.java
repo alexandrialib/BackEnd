@@ -89,4 +89,37 @@ public class User implements UserDetails {
         roles.remove(role);
     }
 
+    public String getId() {
+        return id;
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public List<String> getRoles() {
+        return roles;
+    }
 }

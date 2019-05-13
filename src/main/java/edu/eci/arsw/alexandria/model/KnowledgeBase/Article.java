@@ -37,5 +37,11 @@ public class Article {
         comments.add(comment);
     }
 
+    public String getTitle() {
+        return title;
+    }
 
+    public List<Comment> getComments() {
+        return comments;
+    }
 }
