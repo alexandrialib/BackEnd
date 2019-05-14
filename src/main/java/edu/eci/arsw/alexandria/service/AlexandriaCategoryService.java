@@ -27,5 +27,5 @@ public interface AlexandriaCategoryService {
 
     Flux<Comment> saveCommentInArticle(String category, String article, Comment comment);
 
-    //Flux<User> subscribeToCategory(String category, User user);
+    Flux<User> subscribeToCategory(String category, User user);
 }

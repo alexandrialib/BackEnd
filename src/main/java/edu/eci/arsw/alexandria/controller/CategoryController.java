@@ -3,6 +3,7 @@ package edu.eci.arsw.alexandria.controller;
 import edu.eci.arsw.alexandria.model.KnowledgeBase.Article;
 import edu.eci.arsw.alexandria.model.KnowledgeBase.Category;
 import edu.eci.arsw.alexandria.model.KnowledgeBase.Comment;
+import edu.eci.arsw.alexandria.model.KnowledgeBase.User;
 import edu.eci.arsw.alexandria.service.AlexandriaCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,7 +29,6 @@ public class CategoryController {
     @GetMapping(value = "{name}")
     public Publisher<Category> getCategoryByName(@PathVariable("name") String name){
         return service.getCategoryByName(name);
-
     }
 
     @GetMapping(value = "{name}/articles")
@@ -63,6 +63,12 @@ public class CategoryController {
     @PreAuthorize("hasRole('ADMIN')")
     public Publisher<Category> saveCategory( @RequestBody Category category){
         return service.saveCategory(category);
+    }
+
+    @PostMapping(value = "{name}/subscribe")
+    @PreAuthorize("hasRole('ADMIN')")
+    public Publisher<User> subscribeToCategory(@PathVariable("name") String name, @RequestBody User user){
+        return service.subscribeToCategory(name, user);
     }
 
 }

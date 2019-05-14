@@ -73,4 +73,8 @@ public class Category {
     public List<Article> getArticles() {
         return articles;
     }
+
+    public List<User> getSubs() {
+        return subs;
+    }
 }
