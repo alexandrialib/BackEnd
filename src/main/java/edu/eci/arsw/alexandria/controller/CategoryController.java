@@ -56,6 +56,7 @@ public class CategoryController {
     @PostMapping(value = "{name}/articles")
     @PreAuthorize("hasRole('ADMIN')")
     public Publisher<Article> addArticleInCategory(@PathVariable("name") String name,@RequestBody Article article){
+        System.err.println("category: " + name + " has a new article called " + article.getTitle());
         return service.saveArticleInCategory(name,article);
     }
 

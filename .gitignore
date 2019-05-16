@@ -235,3 +235,5 @@ typings/
 
 # End of https://www.gitignore.io/api/node
 # End of https://www.gitignore.io/api/maven,macOS,linux,intellij,visualStudioCode
+sendgrid.env
+sendgrid.env

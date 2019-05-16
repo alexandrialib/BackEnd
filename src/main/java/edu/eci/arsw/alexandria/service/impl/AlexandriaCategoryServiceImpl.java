@@ -76,7 +76,6 @@ public class AlexandriaCategoryServiceImpl implements AlexandriaCategoryService 
     public Flux<Article> saveArticleInCategory(String name,Article article) {
         return categoryRepository.getCategoryByName(name).flatMap(x -> {
             x.addArticle(article);
-            x.notificar(article);
             return Mono.just(x);
         }).flatMap(this.categoryRepository::save).flatMapIterable(x -> x.getArticles());
     }
