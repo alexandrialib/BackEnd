@@ -10,6 +10,7 @@ import java.util.ArrayList;
 @Data
 public class Paint {
     private LocalDateTime lastModify;
+    private String user;
     private String version;
     private ArrayList < Object > objects;
     private String background;
